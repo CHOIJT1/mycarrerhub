@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCareerHub - Projects</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; }
+    header nav { background: #333; padding: 1em; text-align: center; }
+    header nav a { color: white; margin: 0 1em; text-decoration: none; }
+    section { padding: 2em; }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .project-card { border: 1px solid #ccc; border-radius: 10px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 2em; border-radius: 10px; max-width: 500px; }
+    .hidden { display: none; }
+    .btn-delete { position: absolute; top: 10px; right: 10px; background: red; color: white; border: none; border-radius: 5px; padding: 0.3em 0.6em; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="projects">
+      <h2>My Projects</h2>
+      <div class="project-grid" id="project-container"></div>
+      <button onclick="addProject()">+ 프로젝트 추가</button>
+    </section>
+
+    <div id="project-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <h2 contenteditable="true" id="modal-title"></h2>
+        <p contenteditable="true" id="modal-description"></p>
+        <p><strong>사용 기술:</strong> <span contenteditable="true" id="modal-tech"></span></p>
+        <a id="modal-link" href="#" target="_blank">프로젝트 링크</a>
+        <br><br>
+        <input type="url" id="link-input" placeholder="링크 주소 입력" />
+        <button onclick="saveCurrentProject()">저장</button>
+        <button onclick="deleteProject()" style="margin-left: 1em; background: red; color: white;">삭제</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let projects = JSON.parse(localStorage.getItem('projects') || '[]');
+    let currentIndex = null;
+
+    function renderProjects() {
+      const container = document.getElementById('project-container');
+      container.innerHTML = '';
+      projects.forEach((proj, idx) => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <button class="btn-delete" onclick="removeProject(${idx})">삭제</button>
+          <h3>${proj.title}</h3>
+          <p>${proj.description}</p>
+          <button onclick="openModal(${idx})">자세히 보기</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      const proj = projects[index];
+      document.getElementById('modal-title').textContent = proj.title;
+      document.getElementById('modal-description').textContent = proj.description;
+      document.getElementById('modal-tech').textContent = proj.tech;
+      document.getElementById('modal-link').href = proj.link;
+      document.getElementById('link-input').value = proj.link;
+      document.getElementById('project-modal').classList.remove('hidden');
+      document.getElementById('project-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+      document.getElementById('project-modal').style.display = 'none';
+    }
+
+    function saveCurrentProject() {
+      if (currentIndex === null) return;
+      projects[currentIndex].title = document.getElementById('modal-title').textContent;
+      projects[currentIndex].description = document.getElementById('modal-description').textContent;
+      projects[currentIndex].tech = document.getElementById('modal-tech').textContent;
+      projects[currentIndex].link = document.getElementById('link-input').value;
+      localStorage.setItem('projects', JSON.stringify(projects));
+      renderProjects();
+      closeModal();
+    }
+
+    function deleteProject() {
+      if (currentIndex === null) return;
+      if (confirm('정말 삭제하시겠습니까?')) {
+        projects.splice(currentIndex, 1);
+        localStorage.setItem('projects', JSON.stringify(projects));
+        renderProjects();
+        closeModal();
+      }
+    }
+
+    function removeProject(index) {
+      if (confirm('이 프로젝트를 삭제하시겠습니까?')) {
+        projects.splice(index, 1);
+        localStorage.setItem('projects', JSON.stringify(projects));
+        renderProjects();
+      }
+    }
+
+    function addProject() {
+      projects.push({ title: '새 프로젝트', description: '설명을 입력하세요.', tech: '', link: '#' });
+      localStorage.setItem('projects', JSON.stringify(projects));
+      renderProjects();
+    }
+
+    renderProjects();
+  </script>
+</body>
+</html>

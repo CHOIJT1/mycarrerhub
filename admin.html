@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<link rel="stylesheet" href="assets/styles/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyCareerHub - Admin</title>
+  <link rel="stylesheet" href="assets/styles/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="login-section">
+      <h2>관리자 로그인</h2>
+      <input type="password" id="admin-password" placeholder="비밀번호 입력" />
+      <button onclick="login()">로그인</button>
+    </section>
+
+    <section id="admin-panel" style="display:none;">
+      <h2>프로젝트 추가</h2>
+      <input type="text" id="project-title" placeholder="프로젝트 제목" />
+      <textarea id="project-desc" placeholder="프로젝트 설명"></textarea>
+      <button onclick="addProject()">추가하기</button>
+
+      <h3>등록된 프로젝트 목록</h3>
+      <ul id="project-list"></ul>
+
+      <hr />
+
+      <h2>이력서 업로드</h2>
+      <input type="file" id="resume-upload" />
+      <button onclick="uploadResume()">업로드</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MyCareerHub</p>
+  </footer>
+
+  <script src="scripts/admin.js"></script>
+</body>
+</html>

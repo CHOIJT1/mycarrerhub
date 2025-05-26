@@ -1,0 +1,236 @@
+/* === Reset & 기본 === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* === 네비게이션 바 === */
+nav {
+  background-color: #333;
+  padding: 1em 2em;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+nav a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #00bcd4;
+}
+
+/* === 메인 타이틀 === */
+main h1 {
+  text-align: center;
+  margin: 2em 0 1em;
+}
+
+/* === index.html - 소개 섹션 === */
+.intro {
+  text-align: center;
+  padding: 2em;
+}
+
+.profile {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1em;
+}
+
+/* === projects.html - 카드 레이아웃 === */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5em;
+  padding: 2em;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1em;
+}
+
+.card-content h3 {
+  margin-bottom: 0.5em;
+}
+
+/* === projects.html - 모달 === */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.close-button {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #999;
+}
+
+/* === resume.html === */
+.resume-section {
+  text-align: center;
+  padding: 2em;
+}
+
+.resume-section iframe {
+  border: none;
+  width: 100%;
+  height: 600px;
+  max-width: 900px;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.8em 1.5em;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* === contact.html === */
+.contact-section {
+  max-width: 600px;
+  margin: 2em auto;
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-section label {
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+.contact-section input,
+.contact-section textarea {
+  padding: 0.8em;
+  margin-top: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.contact-section button {
+  margin-top: 1.5em;
+  padding: 0.8em;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.contact-section button:hover {
+  background-color: #218838;
+}
+
+/* === admin.html === */
+#admin-panel, #login-section {
+  max-width: 700px;
+  margin: 2em auto;
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#admin-panel input,
+#admin-panel textarea,
+#login-section input {
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#admin-panel button,
+#login-section button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.8em 1.2em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#admin-panel button:hover,
+#login-section button:hover {
+  background-color: #0056b3;
+}
+
+/* === 푸터 === */
+footer {
+  text-align: center;
+  padding: 1.5em;
+  background-color: #eee;
+  margin-top: 2em;
+  font-size: 0.9em;
+}

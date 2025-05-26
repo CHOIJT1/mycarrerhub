@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCareerHub - Resume</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; text-align: center; }
+    header nav { background: #333; padding: 1em; text-align: center; }
+    header nav a { color: white; margin: 0 1em; text-decoration: none; }
+    section { padding: 2em; }
+    .btn { display: inline-block; margin-top: 1em; padding: 0.5em 1em; background: #333; color: white; text-decoration: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Resume Upload -->
+    <section id="resume">
+      <h2>My Resume</h2>
+      <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="resume" accept="application/pdf" required />
+        <button type="submit">업로드</button>
+      </form>
+      <div id="pdf-display" style="margin-top: 2em;">
+        <embed id="resume-pdf" src="" type="application/pdf" width="80%" height="600px" style="display:none;" />
+        <br />
+        <a id="download-link" href="#" download class="btn" style="display:none;">이력서 다운로드</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const uploadForm = document.getElementById("upload-form");
+    const embed = document.getElementById("resume-pdf");
+    const downloadLink = document.getElementById("download-link");
+
+    // 이력서 URL을 localStorage에서 불러오기
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedUrl = localStorage.getItem("resumeUrl");
+      if (savedUrl) {
+        embed.src = savedUrl;
+        embed.style.display = "block";
+        downloadLink.href = savedUrl;
+        downloadLink.style.display = "inline-block";
+      }
+    });
+
+    // 업로드 핸들링
+    uploadForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fileInput = uploadForm.querySelector('input[name="resume"]');
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append("resume", file);
+
+      fetch("http://localhost:3000/upload", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        const pdfUrl = `http://localhost:3000${data.url}`;
+        embed.src = pdfUrl;
+        embed.style.display = "block";
+        downloadLink.href = pdfUrl;
+        downloadLink.style.display = "inline-block";
+
+        // 저장
+        localStorage.setItem("resumeUrl", pdfUrl);
+      })
+      .catch(err => {
+        alert("업로드 실패");
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
